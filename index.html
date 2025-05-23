@@ -242,7 +242,7 @@
                 </div>
                 <div class="contact-right">
 
-                    <form id="contact-form" onsubmit="submitForm(event)">
+                    <form id="contact-form" onsubmit="submitForm(event)" name= 'submit-to-google-sheet'>
                         <input type="text" name="Name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required>
                         <textarea name="Message" rows="6" placeholder="Your Message" required></textarea>
@@ -276,6 +276,18 @@
                 submitBtn.disabled = false;
             }, 1500);
         }
+    </script>
+
+    <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyJnAZTXLBjSMX9E0qvfJ1z8bBMQlY8EVB8t0zkbi3qlaiahe6abs6cGvTDnI9Kpg7VVQ/exec'
+    const form = document.forms['submit-to-google-sheet']
+
+    form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    .then(response => console.log('Success!', response))
+    .catch(error => console.error('Error!', error.message))
+    })
     </script>
 </body>
 </html>
